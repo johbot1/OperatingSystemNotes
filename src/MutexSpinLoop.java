@@ -1,5 +1,11 @@
 public class MutexTestSpinLoop implements Runnable {
     private static final int NUM_THREADS = 5;
+    private final Mutex m;
+
+    MutexTestSpinLoop(Mutex m, int num) {
+        this.m = m;
+        new Thread(this, "Thread[" + num + "]").start();
+    }
 
     public static void main(String[] args) {
         Mutex m = new Mutex();
@@ -7,13 +13,6 @@ public class MutexTestSpinLoop implements Runnable {
         for (int i = 0; i < NUM_THREADS; i++) {
             new MutexTestSpinLoop(m, i);
         }
-    }
-
-    private final Mutex m;
-
-    MutexTestSpinLoop(Mutex m, int num) {
-        this.m = m;
-        new Thread(this, "Thread[" + num + "]").start();
     }
 
     public void run() {
@@ -33,6 +32,7 @@ public class MutexTestSpinLoop implements Runnable {
         timeInMs = Math.max(1, timeInMs);
         try {
             Thread.sleep(timeInMs);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
     }
 }

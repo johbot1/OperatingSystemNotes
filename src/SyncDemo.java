@@ -4,6 +4,11 @@ public class SyncDemo extends Thread {
     private static final Object lock = new Object();
     private static int count = 0;
 
+    SyncDemo(int num) {
+        super("Thread[" + num + "]");
+        start();
+    }
+
     public static void main(String[] args) {
         Thread[] threads = new Thread[NUM_OBJECTS];
         for (int i = 0; i < NUM_OBJECTS; i++) {
@@ -12,14 +17,10 @@ public class SyncDemo extends Thread {
         for (Thread t : threads) {
             try {
                 t.join();
-            } catch (InterruptedException ignored) { }
+            } catch (InterruptedException ignored) {
+            }
         }
         System.out.println("count=" + count);
-    }
-
-    SyncDemo(int num) {
-        super("Thread[" + num + "]");
-        start();
     }
 
     public void run() {
@@ -40,6 +41,7 @@ public class SyncDemo extends Thread {
     private void delay() {
         try {
             Thread.sleep(100);
-        } catch (InterruptedException ignored) {}
+        } catch (InterruptedException ignored) {
+        }
     }
 }

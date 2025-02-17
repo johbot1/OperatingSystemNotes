@@ -9,7 +9,8 @@ public class BlockingMailbox {
         while (!isEmpty()) {
             try {
                 wait();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
         orange = o;
         notifyAll();
@@ -19,7 +20,8 @@ public class BlockingMailbox {
         while (isEmpty()) {
             try {
                 wait();
-            } catch (InterruptedException ignored) {}
+            } catch (InterruptedException ignored) {
+            }
         }
         Orange ret = orange;
         orange = null;
