@@ -1,3 +1,5 @@
+package src;
+
 public class BlockingMailbox {
     private Orange orange;
 

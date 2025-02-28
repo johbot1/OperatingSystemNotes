@@ -1,3 +1,5 @@
+package src;
+
 public class SyncDemo extends Thread {
     private static final int NUM_OBJECTS = 5;
 

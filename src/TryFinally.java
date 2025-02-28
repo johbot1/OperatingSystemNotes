@@ -1,3 +1,5 @@
+package src;
+
 public class TryFinally {
     public static void main(String[] args) {
         int i = 0;

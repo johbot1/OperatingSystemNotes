@@ -1,3 +1,5 @@
+package src;
+
 public class Mutex {
     public boolean acquire() {
         return true;

@@ -1,3 +1,5 @@
+package src;
+
 public class MutexTestSpinLoop implements Runnable {
     private static final int NUM_THREADS = 5;
     private final Mutex m;
