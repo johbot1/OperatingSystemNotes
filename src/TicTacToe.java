@@ -31,6 +31,13 @@ public class TicTacToe {
             System.err.println("Failed");
             System.exit(-1);
         }
+        //Debugging to make sure I did it correctly lol
+        if (moves != null) {
+            System.out.println("\nLoaded Moves:");
+            for (Move move : moves) {
+                System.out.println("Symbol: " + move.symbol + ", Location: " + move.location);
+            }
+        }
         // Teach the AI program using the data
     }
 
@@ -41,22 +48,60 @@ public class TicTacToe {
             System.err.println("Error: Filename cannot be empty.");
             return null;
         }
-        //If the file is readable, print out each line
+
+        List<Move> movesList = new java.util.ArrayList<>(); // Initialize the list to store moves
+        int lineNumber = 0; // Keep track of line number for error reporting
+
+        //If the file is readable,
         try (java.io.FileReader fileReader = new java.io.FileReader(filename);
              java.io.BufferedReader bufferedReader = new java.io.BufferedReader(new FileReader(filename))) {
             String line;
-            System.out.println("Contents of " + filename + ": ");
+
+            // skip all empty lines and comments,
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);//Print each line
+                if (line.isEmpty() || line.startsWith("#")) {
+                    continue;
+                }
+                // then split line by whitespace (one or more spaces).
+                String[] parts = line.split("\\s+");
+                if (parts.length != 2) {
+                    System.err.println("Warning: Invalid move format in file '" +
+                            filename + "' at line " + lineNumber + ": '" + line +
+                            "'. Expected format: 'SYMBOL LOCATION'. Skipping line.");
+                    continue;
+                }
+                // Instantiate the two parts (Symbol and location),
+                String symbolStr = parts[0];
+                String locationStr = parts[1];
+                Symbol symbol = parseSymbol(symbolStr);
+                int location = parseInt(locationStr);
+
+                // then scan to make sure the symbol is valid.
+                if (symbol == Symbol.INVALID) {
+                    System.err.println("Warning: Invalid symbol: '" + symbolStr + "'. Skipping line.");
+                    continue;
+                }
+
+                // Another check to ensure there is no invalid locations,
+                if (location <= 0 || location >DEFAULT_SQUARES ) {
+                    System.err.println("Warning: Invalid location: '" + locationStr + "'. Location must be positive. Skipping line.");
+                    continue;
+                }
+                // before finally adding in the moves to the list.
+                Move move = new Move();
+                move.symbol = symbol;
+                move.location = location;
+                movesList.add(move);
+
             }
         } catch (java.io.IOException e) {
             System.err.println("[LOADMOVES] ERROR");
             System.err.println("Error reading file: " + filename);
             e.printStackTrace(); // Print the error details for debugging
-            return null; // Indicate file reading failure
+            return null;
         }
-
-        return null;
+        System.out.println("Loaded " + movesList.size() + " moves from " + filename);
+        return movesList;
     }
 
     private static int parseInt(String num) {
@@ -152,7 +197,7 @@ public class TicTacToe {
         }
     }
 
-    private class Move {
+    private static class Move {
         Symbol symbol;
         int location;
     }
