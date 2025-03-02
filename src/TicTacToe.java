@@ -8,25 +8,6 @@ import java.util.Set;
 public class TicTacToe {
     private static final int DEFAULT_SQUARES = 9;
 
-    private enum Symbol {
-        INVALID,
-        X,
-        O;
-
-        Symbol nextMove() {
-            return switch (this) {
-                case X -> O;
-                case O -> X;
-                default -> INVALID;
-            };
-        }
-    }
-
-    private class Move {
-        Symbol symbol;
-        int location;
-    }
-
     public static void main(String[] args) {
         List<Move> moves = null;
         Symbol first = Symbol.X;
@@ -60,14 +41,16 @@ public class TicTacToe {
             System.err.println("Error: Filename cannot be empty.");
             return null;
         }
-        try(java.io.FileReader fileReader = new java.io.FileReader(filename);
-            java.io.BufferedReader bufferedReader = new java.io.BufferedReader(new FileReader(filename))){
+        //If the file is readable, print out each line
+        try (java.io.FileReader fileReader = new java.io.FileReader(filename);
+             java.io.BufferedReader bufferedReader = new java.io.BufferedReader(new FileReader(filename))) {
             String line;
             System.out.println("Contents of " + filename + ": ");
-            while((line = bufferedReader.readLine())!= null){
+            while ((line = bufferedReader.readLine()) != null) {
                 System.out.println(line);//Print each line
             }
-        }catch (java.io.IOException e){
+        } catch (java.io.IOException e) {
+            System.err.println("[LOADMOVES] ERROR");
             System.err.println("Error reading file: " + filename);
             e.printStackTrace(); // Print the error details for debugging
             return null; // Indicate file reading failure
@@ -79,7 +62,8 @@ public class TicTacToe {
     private static int parseInt(String num) {
         try {
             return Integer.parseInt(num);
-        } catch (NumberFormatException ignored) {}
+        } catch (NumberFormatException ignored) {
+        }
         return 0;
     }
 
@@ -105,7 +89,7 @@ public class TicTacToe {
         // Validate the number of squares
         boolean success = true;
         double squareOfNumSquares = Math.sqrt(numSquares);
-        double remainder = squareOfNumSquares - (int)squareOfNumSquares;
+        double remainder = squareOfNumSquares - (int) squareOfNumSquares;
         if (numSquares < DEFAULT_SQUARES || remainder > 0) {
             System.err.println("Error: Invalid number of squares (" + numSquares + ")");
             success = false;
@@ -152,5 +136,24 @@ public class TicTacToe {
         }
 
         return success;
+    }
+
+    private enum Symbol {
+        INVALID,
+        X,
+        O;
+
+        Symbol nextMove() {
+            return switch (this) {
+                case X -> O;
+                case O -> X;
+                default -> INVALID;
+            };
+        }
+    }
+
+    private class Move {
+        Symbol symbol;
+        int location;
     }
 }
