@@ -4,9 +4,14 @@
     <property name="src.dir"     location="src"/>
     <property name="build.dir"   location="build"/>
     <property name="classes.dir" location="${build.dir}/classes"/>
-    <property name="main.class"  value="src.TicTacToe"/> <property name="moves.file"  value="moves.txt"/> <target name="clean" description="Clean the build directory">
-    <delete dir="${build.dir}"/>
-</target>
+    <property name="main.class"  value="src.TicTacToe"/>
+<!--    Default moves.txt filepath -->
+<!--    ant run -Dmoves.filepath=(location of new txt file)-->
+    <property name="moves.filepath" value="src/moves.txt"/>
+
+    <target name="clean" description="Clean the build directory">
+        <delete dir="${build.dir}"/>
+    </target>
 
     <target name="compile" depends="clean" description="Compile Java source code">
         <mkdir dir="${classes.dir}"/>
@@ -17,7 +22,7 @@
 
     <target name="run" depends="compile" description="Run the TicTacToe program">
         <java classname="${main.class}" classpath="${classes.dir}">
-            <arg value="${moves.file}"/> </java>
+            <arg value="${moves.filepath}"/> </java>
     </target>
 
 </project>
