@@ -154,7 +154,7 @@ public class TicTacToe {
         }
 
         // Continue validation on number of moves
-        if (moves.size() != numSquares) {
+        if (moves.size() > numSquares) {
             System.err.println("Error: Number of moves does not match number of squares");
             success = false;
         }
