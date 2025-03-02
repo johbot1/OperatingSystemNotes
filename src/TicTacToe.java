@@ -1,5 +1,6 @@
 package src;
 
+import java.io.FileReader;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -13,17 +14,11 @@ public class TicTacToe {
         O;
 
         Symbol nextMove() {
-            switch (this) {
-                case X:
-                    return O;
-
-                case O:
-                    return X;
-
-                case INVALID:
-                default:
-                    return INVALID;
-            }
+            return switch (this) {
+                case X -> O;
+                case O -> X;
+                default -> INVALID;
+            };
         }
     }
 
@@ -58,7 +53,26 @@ public class TicTacToe {
         // Teach the AI program using the data
     }
 
+    //Load in all moves.txt, then generate a move for each line
     private static List<Move> loadMoves(String filename) {
+        //Check if the file name is not null, and isn't empty
+        if (filename == null || filename.trim().isEmpty()) {
+            System.err.println("Error: Filename cannot be empty.");
+            return null;
+        }
+        try(java.io.FileReader fileReader = new java.io.FileReader(filename);
+            java.io.BufferedReader bufferedReader = new java.io.BufferedReader(new FileReader(filename))){
+            String line;
+            System.out.println("Contents of " + filename + ": ");
+            while((line = bufferedReader.readLine())!= null){
+                System.out.println(line);//Print each line
+            }
+        }catch (java.io.IOException e){
+            System.err.println("Error reading file: " + filename);
+            e.printStackTrace(); // Print the error details for debugging
+            return null; // Indicate file reading failure
+        }
+
         return null;
     }
 
