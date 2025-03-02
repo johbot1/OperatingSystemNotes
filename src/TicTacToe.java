@@ -41,7 +41,7 @@ public class TicTacToe {
         // Teach the AI program using the data
     }
 
-    //Load in all moves.txt, then generate a move for each line
+    //HOMEWORK: Load in all moves.txt, then generate a move for each line
     private static List<Move> loadMoves(String filename) {
         //Check if the file name is not null, and isn't empty
         if (filename == null || filename.trim().isEmpty()) {
@@ -83,7 +83,7 @@ public class TicTacToe {
                 }
 
                 // Another check to ensure there is no invalid locations,
-                if (location <= 0 || location >DEFAULT_SQUARES ) {
+                if (location <= 0 || location > DEFAULT_SQUARES) {
                     System.err.println("Warning: Invalid location: '" + locationStr + "'. Location must be positive. Skipping line.");
                     continue;
                 }
